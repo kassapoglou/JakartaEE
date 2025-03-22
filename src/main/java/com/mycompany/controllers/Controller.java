@@ -1,5 +1,6 @@
 package com.mycompany.controllers;
 
+import com.mycompany.entities.Department;
 import com.mycompany.entities.Employee;
 import jakarta.annotation.Resource;
 import jakarta.persistence.EntityManager;
@@ -43,28 +44,58 @@ public class Controller extends HttpServlet {
     protected void doPost(HttpServletRequest request,
             HttpServletResponse response)
             throws ServletException, IOException {
-
-        try {
-            String first_name = request.getParameter("firstName");
+            Long dept_id = null;
+        
+            String firstName = request.getParameter("firstName");
             String lastName = request.getParameter("lastName");
             String email = request.getParameter("email");
             String date = request.getParameter("hireDate");
             String phoneNumber = request.getParameter("phoneNumber");
             Double monthlySalary = Double.valueOf(request.getParameter("monthlySalary"));
-
-            Employee emp = new Employee();
-            emp.setFirstName(first_name);
-            emp.setLastName(lastName);
-            emp.setSalary(monthlySalary);
-
-            Date dt = new SimpleDateFormat("yyyy-MM-dd").parse(date);
-            emp.setHireDate(dt);
-            emp.setEmail(email);
-            emp.setPhoneNumber(phoneNumber);
+            String dept = request.getParameter("department");
             
+            
+            switch (dept) {
+                case "HR" -> dept_id=1L;
+                case "IT" -> dept_id=2L;
+                case "Finance" -> dept_id=3L;
+                case "Marketing" -> dept_id=4L;
+                default -> {
+                }
+            }
+
+                Department department = new Department();
+                Employee employee = new Employee();
+            
+                department.setName(dept);
+                department.setDept_id(dept_id);
+            
+            
+                employee.setFirstName(firstName);
+                employee.setLastName(lastName);
+                employee.setMonthlySalary(monthlySalary);
+                Date dt = null;
+                try {
+                    dt = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+                } catch (ParseException ex) {
+                    Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                employee.setHireDate(dt);
+                employee.setEmail(email);
+                employee.setPhoneNumber(phoneNumber);
+                employee.setDepartment(department);
+             
+   
+            try {
             userTransaction.begin();
-            em.persist(emp);
+            em.persist(employee);
             userTransaction.commit();
+             } catch (NotSupportedException | 
+                SystemException | RollbackException | 
+                HeuristicMixedException | HeuristicRollbackException | 
+                SecurityException | IllegalStateException ex) {
+            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
             PrintWriter out = response.getWriter();
             out.println("<!DOCTYPE html>");
@@ -73,16 +104,11 @@ public class Controller extends HttpServlet {
             out.println("<title>Servlet NewServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>The user " + emp.getFirstName() + " has been registered </h1>");
+            out.println("<h1>The user " + employee.getFirstName() + " has been registered </h1>");
             out.println("</body>");
             out.println("</html>");
 
-        } catch (ParseException | NotSupportedException | 
-                SystemException | RollbackException | 
-                HeuristicMixedException | HeuristicRollbackException | 
-                SecurityException | IllegalStateException ex) {
-            Logger.getLogger(Controller.class.getName()).log(Level.SEVERE, null, ex);
-        }
+       
 
     }
 
