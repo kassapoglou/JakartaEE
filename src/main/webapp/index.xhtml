@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:f="jakarta.faces.core">
+    <h:head>
+        <link rel="stylesheet" 
+              href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" 
+              integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
+              crossorigin="anonymous"></link>
+        <title>Enter Employee Information</title>
+    </h:head>
+    <h:body class="container mt-5">
+        <h1 style="text-align: center">Employee Registration Form</h1>
+        <h:form class="card p-4 shadow-sm">
+<div class="row">
+        <div class="col-md-6 mb-3">
+            <h:outputLabel for="firstName" value="First Name" class="col-md-6 mb-3"/>
+            <h:inputText id="firstName" value="#{employeeController.firstName}" class="form-control"/>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <h:outputLabel for="lastName" value="Last Name" class="col-md-6 mb-3"/>
+            <h:inputText id="lastName" value="#{employeeController.lastName}" class="form-control"/>
+        </div>
+</div>
+<div class="row">
+        <div class="col-md-6 mb-3">
+            <h:outputLabel for="email" value="Email" class="col-md-6 mb-3"/>
+            <h:inputText id="email" value="#{employeeController.email}" class="form-control"/>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <h:outputLabel for="phone" value="Phone" class="col-md-6 mb-3"/>
+            <h:inputText id="phone" value="#{employeeController.phoneNumber}" class="form-control"/>
+        </div>
+</div>
+<div class="row">
+        <div class="col-md-6 mb-3">
+            <h:outputLabel for="date" value="Hire Date" class="col-md-6 mb-3"/>
+            <h:inputText id="date" value="#{employeeController.date}" type="date" class="form-control"/>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <h:outputLabel for="salary" value="Monthly Salary" class="col-md-6 mb-3"/>
+            <h:inputText id="salary" value="#{employeeController.monthlySalary}" class="form-control"/>
+        </div>
+</div>
+<div class="row">
+        <div class="col-md-6 mb-3">
+            <h:outputLabel for="department" value="Select Department:" class="col-md-6 mb-3"/>
+            <h:selectOneMenu id="department" value="#{employeeController.dept}">
+                <f:selectItem itemLabel="None" itemValue="None" />
+                <f:selectItem itemLabel="HR" itemValue="HR" />
+                <f:selectItem itemLabel="IT" itemValue="IT" />
+                <f:selectItem itemLabel="Finance" itemValue="Finance" />
+                <f:selectItem itemLabel="Marketing" itemValue="Marketing" />
+            </h:selectOneMenu>
+        </div>
+
+</div>
+        <h:commandButton value="Submit" action="#{employeeController.saveCustomer()}" 
+                            class="btn btn-primary custom-btn-size w-50"/>
+
+    </h:form>
+    </h:body>
+</html>
