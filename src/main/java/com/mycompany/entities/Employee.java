@@ -1,41 +1,57 @@
 package com.mycompany.entities;
 
-import jakarta.persistence.Access;
-import jakarta.persistence.AccessType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Access(AccessType.FIELD)
 @Table(name = "EMPLOYEES")
 public class Employee implements Serializable {
 
+    public Employee() {
+    }
+
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    @Column(name = "first_name", nullable = false)
-    private String firstName;
-    @Column(name = "last_name", nullable = false)
-    private String lastName;
-    private String email;
-    private String phoneNumber;
-    @Column(name = "hire_date", nullable = false)
-    private Date hireDate;
-    @Column(precision = 6)
-    @Transient
-    private Double monthlySalary;
-  
+    private Long employee_id;
     
-    public Long getId() {
-        return id;
+    @Column(name = "emp_firstname", nullable = false)
+    private String firstName;
+    
+    @Column(name = "emp_lastname", nullable = false)
+    private String lastName;
+    
+    @Column(name = "emp_email")
+    private String email;
+    
+    @Column(name = "emp_phone")
+    private String phoneNumber;
+    
+    @Column(name = "emp_hiredate", nullable = false)
+    private Date hireDate;
+    
+    @Column(name = "emp_salary", precision=0, nullable = false)
+    private Double monthlySalary;
+    
+    @ManyToOne
+    @JoinColumn(name="dept_id")
+    private Department department;
+
+    public Long getEmployee_id() {
+        return employee_id;
+    }
+
+    public void setEmployee_id(Long employee_id) {
+        this.employee_id = employee_id;
     }
 
     public String getFirstName() {
@@ -78,41 +94,20 @@ public class Employee implements Serializable {
         this.hireDate = hireDate;
     }
 
-    @Access(AccessType.PROPERTY)
-    public Double getSalary() {
+    public Double getMonthlySalary() {
         return monthlySalary;
     }
 
-    public void setSalary(Double salary) {
-        this.monthlySalary = salary;
+    public void setMonthlySalary(Double monthlySalary) {
+        this.monthlySalary = monthlySalary;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Department getDepartment() {
+        return department;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
+    public void setDepartment(Department department) {
+        this.department = department;
     }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Employee)) {
-            return false;
-        }
-        Employee other = (Employee) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "Employee[ id=" + id + " ]";
-    }
+ 
 }
