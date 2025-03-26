@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="jakarta.faces.html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="jakarta.faces.core">
+    <h:head>
+         <link rel="stylesheet" 
+              href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" 
+              integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
+              crossorigin="anonymous"></link>
+        <title>Employees List</title>
+    </h:head>
+    <h:body>
+
+        <h:form >
+            <div class="card">
+
+                <p:dataTable var="employee" value="#{employeeInfoController.employees}" lazy="false" >
+
+                    <p:column headerText="Employee ID">
+                        <h:outputText value="#{employee.employee_id}" />
+                    </p:column>
+                    <p:column headerText="First Name">
+                        <h:outputText value="#{employee.firstName}" />
+                    </p:column>
+                    <p:column headerText="Last Name">
+                        <h:outputText value="#{employee.lastName}" />
+                    </p:column>
+                    <p:column headerText="Email">
+                        <h:outputText value="#{employee.email}" />
+                    </p:column>
+                     <p:column headerText="Department">
+                         <h:outputText value="#{employee.department.name}" />
+                    </p:column>
+                </p:dataTable>
+            </div>
+        </h:form>
+        <h:form>
+            
+            <div class="col-5">
+                <h:commandButton value="Back to Home" action="index" 
+                           class="btn btn-primary btn-sm w-100">
+            </h:commandButton>
+            </div>
+        </h:form>
+    </h:body>
+</html>
